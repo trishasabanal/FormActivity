@@ -5,47 +5,81 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Oswald&display=swap" rel="stylesheet">
-        <style>
-            body{
-                text-align: center;
-                background-color: lightslategrey;
-                font-family: 'Oswald', sans-serif;
-                text-align: left;
-                font-size: 18px;
-            }
+        <script language="javascript" type="text/javascript">
+            function formValidation(){
+                var password = document.forms["form"]["password"].value;
+                var birthYear = Number(document.forms["form"]["bday"].value.substring(0,4));
+                var age = (new Date().getFullYear()) - birthYear;
 
-            form{
-                background-color: white;
-                width: fit-content;
-                margin: auto;
-                padding: 20px 25px 20px 20px;
-                border-radius: 5px;
-            }
+                let flagpass = true;
+                let flagage = true;
 
-            input[type="reset"]{
-                background-color: red;
-                color: white;
-                border: white;
-                padding: 5px 20px;
-            }
+                if(password.length < 8){
+                    document.getElementById("pass").innerHTML = "Password must be at least 8 characters.";
+                    flagpass = false;
+                } 
+                
+                else{
+                    document.getElementById("pass").innerHTML = "";
+                }
 
-            input[type="submit"]{
-                background-color: green;
-                color: white;
-                border: white;
-                padding: 5px 20px;
-            }
+                if(age < 21){
+                    document.getElementById("age").innerHTML = "Minors are not allowed!";
+                    flagage = false;
+                }
+                
+                else{
+                    document.getElementById("age").innerHTML = "";
+                }
 
-            .container{
-                width: 100%;
+                if(flagage && flagpass){
+                    document.getElementById("alert").innerHTML = "Hooray! Your account has been successfully created.";
+                }
+
+                else{
+                    document.getElementById("alert").innerHTML = "";
+                }
             }
-        </style>
+        </script>
     </head>
+    <style>
+        body{
+            background-color: lightslategrey;
+            font-family: 'Oswald', sans-serif;
+            text-align: left;
+            font-size: 18px;
+        }
+        form[id="form"]{
+            background-color: white;
+            width: fit-content;
+            margin: auto;
+            padding: 20px 25px 20px 20px;
+            border-radius: 5px;
+        }
+        input[type="button"]{
+            background-color: green;
+            color: white;
+            border: white;
+            padding: 5px 20px;
+        }
+        input[type="reset"]{
+            background-color: red;
+            color: white;
+            border: white;
+            padding: 5px 20px;
+        }
+        .container{
+            width: 100%;
+        }
+        p[id]{
+            font-size: 13px;
+        }
+    </style>
     <body>
-        <form>
+        <form id="form">
             <h1>Registration Form</h1>
             First Name: </br>
-            <input type="test" class="container" name="firstname"/>
+            <input type="text" class="container" name="firstname"/>
             <br/>
             Last Name: </br>
             <input type="text" class="container" name="lastname"/>
@@ -57,11 +91,11 @@
             <input type="text" class="container" name="email"/>
             <br/>
             Password: </br>
-            <input type="password" class="container" name="password"/>
-            <br/>
+            <input type="password" class="container" name="password" id="password"/>
+            <p id="pass" style="color: red;"></p>
             Date of Birth: </br>
-            <input type="date" class="container" name="bday"/>
-            <br/>
+            <input type="date" class="container" name="bday" id="bday"/>
+            <p id="age" style="color: red;"></p>
             Gender: </br>
             <input type="radio" name="male" value="male"/> Male
             <input type="radio" name="female" value="female"/> Female
@@ -73,8 +107,9 @@
             Address: </br>
             <textarea name="address" class="container" cols="25" rows="5"></textarea>
             <br/>
-            <input type="submit" name="submit" value="Submit"/>
-            <input type="reset" name="reset" value="Reset"/>
+            <p id="alert" style="color: green;"></p>
+            <input type="button" name="submit" value="Submit" id="submit" onclick="formValidation()"/>
+            <input type="reset" name="reset" value="Reset" id="reset"/>
         </form>
     </body>
 </html>
